@@ -54,8 +54,11 @@ static int get_random(int sides) {
  * Returns: int - the result of the roll
  */
 int rolldie ( int num_sides ) {
-
-    return (1 + get_random(num_sides));
+    if (num_sides == FUDGE_SIDES) {
+        return (get_random(3) - 1);
+    } else {
+        return (1 + get_random(num_sides));
+    }
 }
 
 /* parse_string() - Parses a string for dice rolling attributes
@@ -182,8 +185,15 @@ void print_parse_error(const char * label, const int too_big_error){
 
 int *get_num_sides(char *dice_string, int temp_int, int *res_int){
     const char *PERCENT = "%";
+    const char *FUDGE   = "F";
+    const char *fudge   = "f";
     if(strncmp(dice_string, PERCENT, 1) == 0){
         temp_int = 100;
+        res_int = &temp_int;
+        return res_int;
+    }
+    else if(strncmp(dice_string, FUDGE, 1) == 0 || strncmp(dice_string, fudge, 1) == 0) {
+        temp_int = FUDGE_SIDES;
         res_int = &temp_int;
         return res_int;
     }

@@ -54,7 +54,8 @@ as the result.  Hence 3d6 means "roll three six-sided dice, add them
 together and return the result".  If the first number is left out, then
 the number of dice defaults to 1.  If the second number is not a number,
 but a percentage sign (%), then the number of sides becomes 100 (for a
-percentage roll).  If this is not included in the dice string, then the
+percentage roll). If the second number is an F, then the dice becomes a
+fudge dice.  If this is not included in the dice string, then the
 default is 1d6.
 .IP {#x}
 This number describes how many times to roll.  For example, if you want to roll 3

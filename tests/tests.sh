@@ -81,6 +81,11 @@ echo -e "\tUse argv"
 ../rolldice 1d2 1d3
 ../rolldice 1d%
 ../rolldice 1d%+1
+../rolldice 1dF
+../rolldice 1dF+1
+../rolldice 3dF
+../rolldice 4dF
+../rolldice 4dF+2
 
 echo -e "\tUse stdin"
 cat rollfile | ../rolldice

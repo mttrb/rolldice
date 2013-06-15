@@ -60,6 +60,11 @@
 #define MOD_MINUS_IDENT "-"
 #define DROP_IDENT "s"
 
+/* The following #define is used as the number of sides
+ * for a fudge dice roll
+ */
+#define FUDGE_SIDES -1000
+
 // Defines values for true and false, just for testing stuff boolean-wise :)
 #define TRUE_VAL 1
 #define FALSE_VAL 0

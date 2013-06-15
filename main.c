@@ -56,6 +56,56 @@ static void print_version() {
     exit(EX_OK);
 }
 
+/* print_roll() - Prints the value of the individual roll, modifies 
+ *                the output for fudge dice.
+ *
+ * Parameters: The rolled value and the number of sides
+ * Returns: None
+ */
+void print_roll(int roll, int sides) {
+        char fudge_values[] = {'-', ' ', '+'};
+	if (sides == FUDGE_SIDES) {
+		printf("[%c] ", fudge_values[roll + 1]);	
+	} else {
+		printf("%d ", roll);
+	}
+}
+
+/* print_total() - Prints the total of the rolls, modifies the 
+ *                 output for fudge dice.
+ *
+ * Parameters: The rolled value, the number of sides and the number
+ *             of dice
+ * Returns: None
+ */
+void print_total(int total, int sides, int dice) {
+	char *fudge_results[] = { "Sub-Terrible", "Terrible", "Poor", "Mediocre", "Fair", "Good", "Great", "Superb", "Trans-Superb" };
+	int fudge_index;
+
+        if (sides == FUDGE_SIDES) {
+		switch(dice) {
+			case 1:
+				print_roll(total, sides);
+				break;
+	
+			case 4:
+				fudge_index = total;
+				fudge_index += 4;
+
+				if (fudge_index < 0) fudge_index = 0;
+				if (fudge_index > 8) fudge_index = 8;
+
+				printf("%d, %s", total, fudge_results[fudge_index]);
+				break;
+
+			default:
+				printf("%d ", total);
+		}
+        } else {
+		printf("%d ", total);
+	}
+}
+
 /* print_rolls() - Prints the rolls, either just the totals or the
  *                 separate rolls, also.
  * 
@@ -76,7 +126,7 @@ void print_rolls(int *dice_nums) {
 	if(print_separate) printf("Roll #%d: (", i+1);
 	for(j = 0; j < dice_nums[NUM_DICE]; j++) {
 	    temp_roll[j] = rolldie(dice_nums[NUM_SIDES]);
-	    if(print_separate) printf("%d ", temp_roll[j]);
+	    if(print_separate) print_roll(temp_roll[j], dice_nums[NUM_SIDES]);
 	    temp_total += temp_roll[j];
 	}
 	for(j = 0; j < dice_nums[NUM_DROP]; j++) {
@@ -106,7 +156,7 @@ void print_rolls(int *dice_nums) {
 	    temp_total += dice_nums[MODIFIER];
 	}
 	if(print_separate) printf("= ");
-	printf("%d ", temp_total);
+	print_total(temp_total, dice_nums[NUM_SIDES], dice_nums[NUM_DICE]);
 	if(print_separate) printf("\n");
     }
     if(!print_separate) printf("\n");
